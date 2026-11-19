@@ -1,5 +1,5 @@
 import { ArrowRight, Check, Phone, MessageCircle } from 'lucide-react';
-import { RoutePath, routeToHash } from '../types/navigation';
+import { RoutePath, routeToPath } from '../types/navigation';
 import {
   COMPANY_INFO,
   IMAGES,
@@ -167,7 +167,7 @@ export function CommercialPage({ onNavigate }: CommercialPageProps) {
               >
                 <div>
                   <a
-                    href={routeToHash({ page: 'service-detail', slug: service.slug })}
+                    href={routeToPath({ page: 'service-detail', slug: service.slug })}
                     onClick={(e) =>
                       handleNav(e, { page: 'service-detail', slug: service.slug })
                     }
@@ -187,7 +187,7 @@ export function CommercialPage({ onNavigate }: CommercialPageProps) {
                     </div>
                     <h3 className="mt-2 font-display text-lg font-semibold text-[#041E42]">
                       <a
-                        href={routeToHash({ page: 'service-detail', slug: service.slug })}
+                        href={routeToPath({ page: 'service-detail', slug: service.slug })}
                         onClick={(e) =>
                           handleNav(e, { page: 'service-detail', slug: service.slug })
                         }
@@ -203,7 +203,7 @@ export function CommercialPage({ onNavigate }: CommercialPageProps) {
                 </div>
                 <div className="px-6 pb-6 pt-4 border-t border-slate-100">
                   <a
-                    href={routeToHash({ page: 'service-detail', slug: service.slug })}
+                    href={routeToPath({ page: 'service-detail', slug: service.slug })}
                     onClick={(e) =>
                       handleNav(e, { page: 'service-detail', slug: service.slug })
                     }

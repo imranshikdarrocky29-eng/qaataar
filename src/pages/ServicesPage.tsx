@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, Search, Phone, MessageCircle } from 'lucide-react';
-import { RoutePath, routeToHash } from '../types/navigation';
+import { RoutePath, routeToPath } from '../types/navigation';
 import {
   COMPANY_INFO,
   PLUMBING_SERVICES,
@@ -148,7 +148,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
 
                       <h2 className="mt-2.5 font-display text-xl font-semibold text-[#041E42]">
                         <a
-                          href={routeToHash({
+                          href={routeToPath({
                             page: 'service-detail',
                             slug: service.slug,
                           })}
@@ -173,7 +173,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
 
                   <div className="px-6 pb-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-4">
                     <a
-                      href={routeToHash({
+                      href={routeToPath({
                         page: 'service-detail',
                         slug: service.slug,
                       })}

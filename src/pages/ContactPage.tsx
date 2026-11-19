@@ -14,6 +14,7 @@ import {
   SERVICE_AREAS,
   getWhatsAppUrl,
 } from '../data/plumbingData';
+import { TRADE_SERVICES } from '../data/tradeServicesData';
 
 interface ContactPageProps {
   preselectedService?: string;
@@ -372,11 +373,20 @@ Details: ${form.details || 'Requesting plumbing service / quote.'}`;
                           }
                           className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-300 bg-white text-[#041E42] focus:outline-none focus:ring-2 focus:ring-[#041E42]"
                         >
-                          {PLUMBING_SERVICES.map((service) => (
-                            <option key={service.slug} value={service.title}>
-                              {service.title}
-                            </option>
-                          ))}
+                          <optgroup label="Plumbing Services">
+                            {PLUMBING_SERVICES.map((service) => (
+                              <option key={service.slug} value={service.title}>
+                                {service.title}
+                              </option>
+                            ))}
+                          </optgroup>
+                          <optgroup label="Additional Home &amp; Technical Services">
+                            {TRADE_SERVICES.map((service) => (
+                              <option key={service.slug} value={service.label}>
+                                {service.label}
+                              </option>
+                            ))}
+                          </optgroup>
                         </select>
                       </div>
 

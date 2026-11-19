@@ -35,6 +35,8 @@ export const COMPANY_INFO = {
   brand: 'Fix Hub Qatar',
   phoneDisplay: '+974 3103 6428',
   phoneHref: 'tel:+97431036428',
+  secondaryPhoneDisplay: '+974 5072 6573',
+  secondaryPhoneHref: 'tel:+97450726573',
   whatsappDisplay: '+974 3103 6428',
   whatsappNumber: '97431036428',
   email: 'fixhubqatar@gmail.com',
@@ -42,6 +44,9 @@ export const COMPANY_INFO = {
   hours: '24/7 Emergency Dispatch · Standard Service Sat–Thu, 07:00–21:00',
   warranty: '90-Day Workmanship Warranty',
   dispatchTime: '45 Min Avg. Doha Dispatch',
+  facebookUrl: 'https://www.facebook.com/profile.php?id=61592877658988',
+  instagramUrl: 'https://www.instagram.com/fixhubqatar',
+  tiktokUrl: 'https://www.tiktok.com/@fixhubqatar',
 };
 
 export function getWhatsAppUrl(message?: string): string {
@@ -578,6 +583,34 @@ export const SERVICE_AREAS: ServiceArea[] = [
     dispatch: 'Scheduled / Urgent Dispatch',
     propertyTypes: 'Warehouses, industrial facilities, staff accommodations, coastal homes',
     notes: 'Heavy-duty piping, high-capacity water tank banks, pump stations, and facility maintenance.',
+  },
+  {
+    name: 'Um Salal Muhammad, Um Salal Ali & Um Al Amed',
+    zone: 'North Doha & Umm Salal',
+    dispatch: '35–50 min',
+    propertyTypes: 'Family villas, compounds, new residential plots, shops',
+    notes: 'Plumbing, electrical, AC servicing, tank cleaning, gate welding, and complete home maintenance.',
+  },
+  {
+    name: 'Al Khessa, Rawdat Al Hamama & Al Kharatiyat',
+    zone: 'North Doha & Lusail',
+    dispatch: '30–45 min',
+    propertyTypes: 'Modern standalone villas, residential compounds, commercial retail',
+    notes: 'Same-day plumbing, electrical fault diagnostics, satellite setup, TV mounting, and AC maintenance.',
+  },
+  {
+    name: 'Al Shakama & Surrounding North Corridor',
+    zone: 'North Doha & Umm Salal',
+    dispatch: '40–55 min',
+    propertyTypes: 'Villas, majlis residences, farms, residential compounds',
+    notes: 'Booster pump repairs, water tank maintenance, outdoor electrical lighting, and welding repairs.',
+  },
+  {
+    name: 'Ferroj Al Sudan, Bin Omran & Al Markiya',
+    zone: 'Central & Inner Doha',
+    dispatch: '25–40 min',
+    propertyTypes: 'Apartments, family villas, clinics, offices, restaurants',
+    notes: 'Rapid emergency dispatch for plumbing, AC, electrical, painting, carpentry, and handyman work.',
   },
 ];
 

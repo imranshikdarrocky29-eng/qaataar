@@ -6,16 +6,19 @@
 import { useState, useEffect } from 'react';
 import {
   RoutePath,
-  parseHashToRoute,
-  routeToHash,
+  parseLocationToRoute,
+  routeToPath,
 } from './types/navigation';
 import { PLUMBING_SERVICES, BLOG_POSTS } from './data/plumbingData';
+import { TRADE_SERVICES } from './data/tradeServicesData';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { FloatingContactButtons } from './components/FloatingContactButtons';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { ServiceDetailPage } from './pages/ServiceDetailPage';
+import { TradeServicePage } from './pages/TradeServicePage';
 import { ResidentialPage } from './pages/ResidentialPage';
 import { CommercialPage } from './pages/CommercialPage';
 import { ServiceAreasPage } from './pages/ServiceAreasPage';
@@ -26,19 +29,20 @@ function getPageSeo(route: RoutePath): { title: string; description: string } {
   switch (route.page) {
     case 'home':
       return {
-        title: 'Fix Hub Qatar – Professional Plumbing Services in Doha & Qatar',
+        title: 'Fix Hub Qatar – Reliable Plumbing, Electric & Home Maintenance in Qatar',
         description:
-          'Trusted plumbing services in Qatar. Fix Hub Qatar delivers 24/7 emergency plumbing, water leak detection, drain cleaning, water heater & tank care across Doha.',
+          'Reliable plumbing, electric, AC service, satellite repair, painting, carpentry, TV installation, handyman, and welding solutions across Doha and Qatar.',
       };
     case 'about':
       return {
-        title: 'About Us – Fix Hub Qatar | Plumbing Specialists in Doha',
+        title: 'About Us – Fix Hub Qatar | Home & Commercial Maintenance in Doha',
         description:
-          'Learn about Fix Hub Qatar, our experienced plumbing technicians, pressure-tested materials, and commitment to reliable residential and commercial service.',
+          'Learn about Fix Hub Qatar, our experienced technicians, quality materials, and commitment to reliable residential and commercial maintenance across Qatar.',
       };
     case 'services':
+    case 'plumbing-service':
       return {
-        title: 'Our Plumbing Services in Qatar – Fix Hub Qatar',
+        title: 'Plumbing Service in Qatar – Fix Hub Qatar',
         description:
           'Explore 13 specialized plumbing services in Qatar including emergency repairs, leak detection, pipe replacement, drain cleaning, bathrooms, kitchens, and water tanks.',
       };
@@ -53,23 +57,34 @@ function getPageSeo(route: RoutePath): { title: string; description: string } {
           'Professional plumbing repair and installation details from Fix Hub Qatar.',
       };
     }
+    case 'trade-service': {
+      const svc = TRADE_SERVICES.find((s) => s.slug === route.slug);
+      return {
+        title: svc
+          ? `${svc.label} in Qatar – Fix Hub Qatar`
+          : 'Our Services – Fix Hub Qatar',
+        description:
+          svc?.summary ||
+          'Reliable residential and commercial maintenance services across Doha and Qatar.',
+      };
+    }
     case 'residential':
       return {
-        title: 'Residential Plumbing Qatar – Villas & Apartments | Fix Hub Qatar',
+        title: 'Residential Plumbing & Maintenance Qatar – Villas & Apartments | Fix Hub Qatar',
         description:
-          'Dependable residential plumbing services in Doha, Lusail, The Pearl, and Al Waab for leaks, bathrooms, kitchens, water heaters, and rooftop tanks.',
+          'Dependable residential plumbing and home maintenance in Doha, Lusail, The Pearl, and Al Waab for leaks, electrical, AC, bathrooms, kitchens, and tanks.',
       };
     case 'commercial':
       return {
-        title: 'Commercial Plumbing Qatar – Offices & Facilities | Fix Hub Qatar',
+        title: 'Commercial Plumbing & Facility Maintenance Qatar | Fix Hub Qatar',
         description:
-          'Commercial plumbing maintenance, booster pump servicing, hydro-jet drain clearing, and Annual Maintenance Contracts across Doha and Qatar.',
+          'Commercial plumbing, electrical, AC maintenance, booster pump servicing, and Annual Maintenance Contracts across Doha and Qatar.',
       };
     case 'areas':
       return {
-        title: 'Plumbing Service Areas in Doha & Qatar – Fix Hub Qatar',
+        title: 'Service Areas in Doha & Qatar – Fix Hub Qatar',
         description:
-          'Check plumbing dispatch coverage across West Bay, The Pearl, Lusail, Al Sadd, Al Waab, Al Wakrah, Al Rayyan, Al Khor, and Industrial Area.',
+          'Check technician dispatch coverage across West Bay, The Pearl, Lusail, Al Sadd, Um Salal Muhammad, Al Khessa, Ferroj Al Sudan, Bin Omran, Al Wakrah, and more.',
       };
     case 'blog': {
       const post = route.slug
@@ -78,33 +93,33 @@ function getPageSeo(route: RoutePath): { title: string; description: string } {
       return {
         title: post
           ? `${post.title} | Fix Hub Qatar Blog`
-          : 'Plumbing Guides & Tips for Qatar Homes – Fix Hub Qatar Blog',
+          : 'Maintenance Guides & Tips for Qatar Homes – Fix Hub Qatar Blog',
         description:
           post?.excerpt ||
-          'Practical plumbing maintenance guides for Qatar homes and commercial buildings covering water tanks, leak detection, heaters, and drains.',
+          'Practical maintenance guides for Qatar homes and commercial buildings covering plumbing, water tanks, leak detection, heaters, and drains.',
       };
     }
     case 'contact':
       return {
-        title: 'Contact Fix Hub Qatar – Book a Plumber in Doha (24/7)',
+        title: 'Contact Fix Hub Qatar – Book a Technician in Doha (24/7)',
         description:
-          'Call +974 3103 6428, message on WhatsApp, or book an online plumbing inspection or quotation with Fix Hub Qatar.',
+          'Call +974 3103 6428, message on WhatsApp, or book an online inspection or quotation with Fix Hub Qatar.',
       };
   }
 }
 
 export default function App() {
   const [route, setRoute] = useState<RoutePath>(() =>
-    parseHashToRoute(window.location.hash)
+    parseLocationToRoute(window.location.pathname, window.location.search)
   );
 
   useEffect(() => {
-    const onHashChange = () => {
-      setRoute(parseHashToRoute(window.location.hash));
+    const onPopState = () => {
+      setRoute(parseLocationToRoute(window.location.pathname, window.location.search));
       window.scrollTo({ top: 0, behavior: 'auto' });
     };
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
   useEffect(() => {
@@ -117,13 +132,13 @@ export default function App() {
   }, [route]);
 
   const handleNavigate = (nextRoute: RoutePath) => {
-    const nextHash = routeToHash(nextRoute);
-    if (window.location.hash !== nextHash) {
-      window.location.hash = nextHash;
-    } else {
-      setRoute(nextRoute);
-      window.scrollTo({ top: 0, behavior: 'auto' });
+    const nextPath = routeToPath(nextRoute);
+    const currentFull = `${window.location.pathname}${window.location.search}`;
+    if (currentFull !== nextPath) {
+      window.history.pushState({}, '', nextPath);
     }
+    setRoute(nextRoute);
+    window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   return (
@@ -133,9 +148,14 @@ export default function App() {
       <main className="flex-1">
         {route.page === 'home' && <HomePage onNavigate={handleNavigate} />}
         {route.page === 'about' && <AboutPage onNavigate={handleNavigate} />}
-        {route.page === 'services' && <ServicesPage onNavigate={handleNavigate} />}
+        {(route.page === 'services' || route.page === 'plumbing-service') && (
+          <ServicesPage onNavigate={handleNavigate} />
+        )}
         {route.page === 'service-detail' && (
           <ServiceDetailPage slug={route.slug} onNavigate={handleNavigate} />
+        )}
+        {route.page === 'trade-service' && (
+          <TradeServicePage slug={route.slug} onNavigate={handleNavigate} />
         )}
         {route.page === 'residential' && (
           <ResidentialPage onNavigate={handleNavigate} />
@@ -153,6 +173,7 @@ export default function App() {
       </main>
 
       <Footer onNavigate={handleNavigate} />
+      <FloatingContactButtons />
     </div>
   );
 }

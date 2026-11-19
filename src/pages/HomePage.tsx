@@ -10,7 +10,7 @@ import {
   Clock,
   Award,
 } from 'lucide-react';
-import { RoutePath, routeToHash } from '../types/navigation';
+import { RoutePath, routeToPath } from '../types/navigation';
 import {
   COMPANY_INFO,
   IMAGES,
@@ -21,6 +21,7 @@ import {
   ServiceCategory,
   getWhatsAppUrl,
 } from '../data/plumbingData';
+import { OUR_SERVICES_MENU } from '../data/tradeServicesData';
 import { ResilientImage } from '../components/ResilientImage';
 import { CallToActionBand } from '../components/CallToActionBand';
 
@@ -28,21 +29,23 @@ interface HomePageProps {
   onNavigate: (route: RoutePath) => void;
 }
 
-const CATEGORIES: ('All' | ServiceCategory)[] = [
-  'All',
+type HomeServiceView = 'Core Services' | ServiceCategory;
+
+const HOME_TABS: HomeServiceView[] = [
+  'Core Services',
   'Emergency & Repairs',
   'Bathrooms & Kitchens',
   'Pipes, Tanks & Systems',
 ];
 
 export function HomePage({ onNavigate }: HomePageProps) {
-  const [selectedCategory, setSelectedCategory] = useState<'All' | ServiceCategory>('All');
+  const [selectedTab, setSelectedTab] = useState<HomeServiceView>('Core Services');
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
-  const filteredServices =
-    selectedCategory === 'All'
-      ? PLUMBING_SERVICES
-      : PLUMBING_SERVICES.filter((s) => s.category === selectedCategory);
+  const filteredPlumbing =
+    selectedTab === 'Core Services'
+      ? []
+      : PLUMBING_SERVICES.filter((s) => s.category === selectedTab);
 
   const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, route: RoutePath) => {
     e.preventDefault();
@@ -57,15 +60,15 @@ export function HomePage({ onNavigate }: HomePageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
             <div className="lg:col-span-6 flex flex-col justify-center">
               <p className="text-sm font-medium text-[#F5B700] tracking-wide">
-                Doha &amp; Nationwide Qatar Plumbing Specialists
+                Doha &amp; Nationwide Qatar Multi-Trade Specialists
               </p>
 
               <h1 className="mt-3 font-display text-4xl sm:text-5xl font-bold tracking-tight text-white leading-[1.1] text-balance">
-                Reliable Plumbing Solutions in Qatar
+                Reliable Plumbing, Electric and Home Maintenance Solution in Qatar
               </h1>
 
               <p className="mt-5 text-base sm:text-lg text-slate-200 leading-relaxed max-w-xl">
-                Fix Hub Qatar provides dependable emergency repairs, acoustic leak detection, pipe installation, drainage clearance, and full bathroom and kitchen plumbing for homes and businesses across Doha, Lusail, The Pearl, and Al Wakrah.
+                Fix Hub Qatar delivers dependable plumbing, electrical troubleshooting, AC maintenance, satellite repair, painting, carpentry, TV wall mounting, handyman fixes, and welding services for villas, apartments, and commercial facilities across Doha, Lusail, The Pearl, and Um Salal.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
@@ -97,10 +100,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <div className="h-full min-h-[280px] lg:min-h-[400px] rounded-xl overflow-hidden border border-[#163C70] bg-[#072754]">
                 <ResilientImage
                   src={IMAGES.hero}
-                  alt="Professional plumber from Fix Hub Qatar inspecting copper and PEX manifold pipes in Doha"
+                  alt="Fix Hub Qatar technician handling residential plumbing, electrical, and home maintenance in Doha"
                   className="w-full h-full object-cover"
                   containerClassName="w-full h-full min-h-[280px]"
-                  fallbackLabel="Fix Hub Qatar Plumbing Engineering"
+                  fallbackLabel="Fix Hub Qatar Home Maintenance"
                 />
               </div>
             </div>
@@ -126,10 +129,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
             </div>
             <div>
               <div className="font-display text-2xl sm:text-3xl font-bold text-[#F5B700] tabular-nums">
-                13 Services
+                9 Trades
               </div>
               <div className="mt-1 text-sm text-slate-200">
-                Residential &amp; commercial coverage
+                Plumbing, electric &amp; home maintenance
               </div>
             </div>
             <div>
@@ -152,10 +155,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <div className="aspect-[4/3] rounded-xl overflow-hidden border border-slate-200 bg-white">
                 <ResilientImage
                   src={IMAGES.heater}
-                  alt="Fix Hub Qatar plumber calibrating pressure gauge and acoustic leak detector"
+                  alt="Fix Hub Qatar maintenance engineer inspecting plumbing and electrical systems"
                   className="w-full h-full object-cover"
                   containerClassName="w-full h-full"
-                  fallbackLabel="Diagnostic Plumbing Precision"
+                  fallbackLabel="Diagnostic Maintenance Precision"
                 />
               </div>
             </div>
@@ -163,18 +166,18 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="lg:col-span-7">
               <p className="text-sm font-semibold text-amber-700">Who We Are</p>
               <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#041E42] text-balance">
-                Dedicated Plumbing Specialists Built on Clean Workmanship and Transparent Service
+                Complete Home &amp; Commercial Maintenance Built on Clean Workmanship
               </h2>
               <p className="mt-4 text-base text-slate-600 leading-relaxed">
-                Fix Hub Qatar is a specialized plumbing company serving villas, apartments, offices, shops, and commercial buildings across Qatar. Instead of juggling multiple unverified contractors, our customers work directly with our trained plumbing technicians who arrive on time, diagnose faults accurately, and leave every space clean.
+                Fix Hub Qatar is a dedicated technical service team serving villas, apartments, offices, shops, and commercial buildings across Qatar. Instead of coordinating separate contractors for leaks, tripping breakers, AC servicing, painting, carpentry, or TV mounting, one call connects you to our trained in-house specialists.
               </p>
               <p className="mt-3 text-base text-slate-600 leading-relaxed">
-                Whether resolving a late-night pipe burst in Al Sadd or executing a full bathroom upgrade in Lusail, we combine durable materials with straightforward communication from first call to final pressure test.
+                Whether fixing a late-night pipe burst in Bin Omran, servicing split ACs in Al Khessa, or completing full move-in handyman and electrical upgrades in Lusail, we combine certified materials with transparent communication from first call to final handover.
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-6">
                 <a
-                  href={routeToHash({ page: 'about' })}
+                  href={routeToPath({ page: 'about' })}
                   onClick={(e) => handleNav(e, { page: 'about' })}
                   className="inline-flex items-center gap-2 text-sm font-semibold text-[#041E42] hover:text-amber-700 transition-colors"
                 >
@@ -182,7 +185,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </a>
                 <a
-                  href={routeToHash({ page: 'areas' })}
+                  href={routeToPath({ page: 'areas' })}
                   onClick={(e) => handleNav(e, { page: 'areas' })}
                   className="inline-flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-[#041E42] transition-colors"
                 >
@@ -195,23 +198,23 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* 3. Professional Plumbing Services Section */}
+      {/* 3. Our Services Section (All 9 Core Services + Plumbing Specialties Tabs) */}
       <section className="py-16 lg:py-24 bg-white border-b border-slate-200">
         <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <div className="max-w-2xl">
-              <p className="text-sm font-semibold text-amber-700">Our Plumbing Services</p>
+              <p className="text-sm font-semibold text-amber-700">Our Services</p>
               <h2 className="mt-2 font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#041E42] text-balance">
-                Complete Plumbing Repair, Installation &amp; Maintenance in Qatar
+                Plumbing, Electric &amp; Complete Home Maintenance Services in Qatar
               </h2>
             </div>
 
             <a
-              href={routeToHash({ page: 'services' })}
-              onClick={(e) => handleNav(e, { page: 'services' })}
+              href={routeToPath({ page: 'plumbing-service' })}
+              onClick={(e) => handleNav(e, { page: 'plumbing-service' })}
               className="inline-flex items-center gap-2 text-sm font-semibold text-[#041E42] hover:text-amber-700 whitespace-nowrap shrink-0"
             >
-              <span>Explore full service directory</span>
+              <span>Explore plumbing service directory</span>
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </a>
           </div>
@@ -219,109 +222,184 @@ export function HomePage({ onNavigate }: HomePageProps) {
           {/* Interactive Filter Controls */}
           <div
             role="tablist"
-            aria-label="Filter plumbing services by category"
+            aria-label="Browse Fix Hub Qatar services"
             className="mt-8 inline-flex flex-wrap items-center gap-1 p-1 bg-slate-100 rounded-lg border border-slate-200"
           >
-            {CATEGORIES.map((category) => {
-              const active = selectedCategory === category;
+            {HOME_TABS.map((tab) => {
+              const active = selectedTab === tab;
               return (
                 <button
-                  key={category}
+                  key={tab}
                   type="button"
                   role="tab"
                   aria-selected={active}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => setSelectedTab(tab)}
                   className={`px-3.5 py-2 text-xs sm:text-sm font-medium rounded-md transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer ${
                     active
                       ? 'bg-[#041E42] text-white shadow-xs'
                       : 'text-slate-600 hover:text-[#041E42]'
                   }`}
                 >
-                  {category}
+                  {tab}
                 </button>
               );
             })}
           </div>
 
           {/* Service Cards Grid */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredServices.map((service) => (
-              <article
-                key={service.slug}
-                className="group bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col justify-between hover:border-[#041E42]/40 transition-colors duration-150"
-              >
-                <div>
-                  <a
-                    href={routeToHash({ page: 'service-detail', slug: service.slug })}
-                    onClick={(e) =>
-                      handleNav(e, { page: 'service-detail', slug: service.slug })
-                    }
-                    className="block aspect-[4/3] bg-slate-100 overflow-hidden border-b border-slate-200 focus-visible:outline-2 focus-visible:outline-[#041E42]"
-                  >
-                    <ResilientImage
-                      src={service.image}
-                      alt={service.imageAlt}
-                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-200"
-                      containerClassName="w-full h-full"
-                      fallbackLabel={service.shortTitle}
-                    />
-                  </a>
+          {selectedTab === 'Core Services' ? (
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {OUR_SERVICES_MENU.map((service) => (
+                <article
+                  key={service.slug}
+                  className="group bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col justify-between hover:border-[#041E42]/40 transition-colors duration-150"
+                >
+                  <div>
+                    <a
+                      href={routeToPath(service.route)}
+                      onClick={(e) => handleNav(e, service.route)}
+                      className="block aspect-[4/3] bg-slate-100 overflow-hidden border-b border-slate-200 focus-visible:outline-2 focus-visible:outline-[#041E42]"
+                    >
+                      <ResilientImage
+                        src={service.image}
+                        alt={service.imageAlt}
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-200"
+                        containerClassName="w-full h-full"
+                        fallbackLabel={service.label}
+                      />
+                    </a>
 
-                  <div className="p-6">
-                    <div className="flex items-center gap-2 text-xs text-slate-500">
-                      <span className="font-mono font-semibold text-[#041E42] tabular-nums">
-                        {service.index}
-                      </span>
-                      <span aria-hidden="true">·</span>
-                      <span>{service.propertyScope}</span>
-                      <span aria-hidden="true">·</span>
-                      <span>{service.responseWindow}</span>
+                    <div className="p-6">
+                      <div className="flex items-center gap-2 text-xs text-slate-500">
+                        <span className="font-mono font-semibold text-[#041E42] tabular-nums">
+                          {service.index}
+                        </span>
+                        <span aria-hidden="true">·</span>
+                        <span>{service.propertyScope}</span>
+                        <span aria-hidden="true">·</span>
+                        <span>{service.responseWindow}</span>
+                      </div>
+
+                      <h3 className="mt-2.5 font-display text-lg font-semibold text-[#041E42] group-hover:text-amber-700 transition-colors">
+                        <a
+                          href={routeToPath(service.route)}
+                          onClick={(e) => handleNav(e, service.route)}
+                          className="focus-visible:outline-2 focus-visible:outline-[#041E42] rounded-sm"
+                        >
+                          {service.label}
+                        </a>
+                      </h3>
+
+                      <p className="mt-2.5 text-sm text-slate-600 leading-relaxed">
+                        {service.summary}
+                      </p>
                     </div>
-
-                    <h3 className="mt-2.5 font-display text-lg font-semibold text-[#041E42] group-hover:text-amber-700 transition-colors">
-                      <a
-                        href={routeToHash({ page: 'service-detail', slug: service.slug })}
-                        onClick={(e) =>
-                          handleNav(e, { page: 'service-detail', slug: service.slug })
-                        }
-                        className="focus-visible:outline-2 focus-visible:outline-[#041E42] rounded-sm"
-                      >
-                        {service.title}
-                      </a>
-                    </h3>
-
-                    <p className="mt-2.5 text-sm text-slate-600 leading-relaxed">
-                      {service.summary}
-                    </p>
                   </div>
-                </div>
 
-                <div className="px-6 pb-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-4">
-                  <a
-                    href={routeToHash({ page: 'service-detail', slug: service.slug })}
-                    onClick={(e) =>
-                      handleNav(e, { page: 'service-detail', slug: service.slug })
-                    }
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#041E42] hover:text-amber-700 whitespace-nowrap"
-                  >
-                    <span>Service details</span>
-                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                  </a>
+                  <div className="px-6 pb-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-4">
+                    <a
+                      href={routeToPath(service.route)}
+                      onClick={(e) => handleNav(e, service.route)}
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#041E42] hover:text-amber-700 whitespace-nowrap"
+                    >
+                      <span>Service details</span>
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    </a>
 
-                  <a
-                    href={getWhatsAppUrl(
-                      `Hello Fix Hub Qatar, I need assistance with ${service.title}.`
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-medium text-emerald-700 hover:text-emerald-800 whitespace-nowrap"
-                  >
-                    WhatsApp quote
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
+                    <a
+                      href={getWhatsAppUrl(
+                        `Hello Fix Hub Qatar, I need assistance with ${service.label}.`
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-medium text-emerald-700 hover:text-emerald-800 whitespace-nowrap"
+                    >
+                      WhatsApp quote
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredPlumbing.map((service) => (
+                <article
+                  key={service.slug}
+                  className="group bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col justify-between hover:border-[#041E42]/40 transition-colors duration-150"
+                >
+                  <div>
+                    <a
+                      href={routeToPath({ page: 'service-detail', slug: service.slug })}
+                      onClick={(e) =>
+                        handleNav(e, { page: 'service-detail', slug: service.slug })
+                      }
+                      className="block aspect-[4/3] bg-slate-100 overflow-hidden border-b border-slate-200 focus-visible:outline-2 focus-visible:outline-[#041E42]"
+                    >
+                      <ResilientImage
+                        src={service.image}
+                        alt={service.imageAlt}
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-200"
+                        containerClassName="w-full h-full"
+                        fallbackLabel={service.shortTitle}
+                      />
+                    </a>
+
+                    <div className="p-6">
+                      <div className="flex items-center gap-2 text-xs text-slate-500">
+                        <span className="font-mono font-semibold text-[#041E42] tabular-nums">
+                          {service.index}
+                        </span>
+                        <span aria-hidden="true">·</span>
+                        <span>{service.propertyScope}</span>
+                        <span aria-hidden="true">·</span>
+                        <span>{service.responseWindow}</span>
+                      </div>
+
+                      <h3 className="mt-2.5 font-display text-lg font-semibold text-[#041E42] group-hover:text-amber-700 transition-colors">
+                        <a
+                          href={routeToPath({ page: 'service-detail', slug: service.slug })}
+                          onClick={(e) =>
+                            handleNav(e, { page: 'service-detail', slug: service.slug })
+                          }
+                          className="focus-visible:outline-2 focus-visible:outline-[#041E42] rounded-sm"
+                        >
+                          {service.title}
+                        </a>
+                      </h3>
+
+                      <p className="mt-2.5 text-sm text-slate-600 leading-relaxed">
+                        {service.summary}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="px-6 pb-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-4">
+                    <a
+                      href={routeToPath({ page: 'service-detail', slug: service.slug })}
+                      onClick={(e) =>
+                        handleNav(e, { page: 'service-detail', slug: service.slug })
+                      }
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#041E42] hover:text-amber-700 whitespace-nowrap"
+                    >
+                      <span>Service details</span>
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    </a>
+
+                    <a
+                      href={getWhatsAppUrl(
+                        `Hello Fix Hub Qatar, I need assistance with ${service.title}.`
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-medium text-emerald-700 hover:text-emerald-800 whitespace-nowrap"
+                    >
+                      WhatsApp quote
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -332,10 +410,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="lg:col-span-5">
               <p className="text-sm font-medium text-[#F5B700]">Why Choose Fix Hub Qatar</p>
               <h2 className="mt-2 font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-balance">
-                Engineering Standards Without Hidden Surprises
+                Engineering &amp; Maintenance Standards Without Hidden Surprises
               </h2>
               <p className="mt-4 text-base text-slate-200 leading-relaxed">
-                Plumbing faults disrupt daily life and damage expensive property finishes. Our focus is getting the repair right on the first visit with durable components and respectful technicians.
+                Water leaks, electrical faults, and AC breakdowns disrupt daily comfort and threaten property finishes. Our focus is resolving every task cleanly on the first visit with certified parts and skilled technicians.
               </p>
             </div>
 
@@ -343,23 +421,23 @@ export function HomePage({ onNavigate }: HomePageProps) {
               {[
                 {
                   icon: Wrench,
-                  title: 'Experienced Plumbing Technicians',
-                  text: 'Trained specialists familiar with European concealed frames, PPR fusion systems, booster pumps, and Qatar building standards.',
+                  title: 'Skilled Multi-Trade Technicians',
+                  text: 'Experienced specialists in plumbing, electrical panels, split/ducted AC systems, carpentry, painting, satellite alignment, TV mounting, and welding.',
                 },
                 {
                   icon: ShieldCheck,
                   title: 'Quality Materials & Workmanship',
-                  text: 'We install WRAS-approved stainless flexi-hoses, brass valves, and pressure-tested fittings backed by our 90-day warranty.',
+                  text: 'We install WRAS-approved hoses, certified breakers, brass valves, and heavy-duty anchors backed by our 90-day workmanship warranty.',
                 },
                 {
                   icon: Clock,
-                  title: 'Fast Response Across Doha',
-                  text: 'Stocked service vehicles stationed across key Doha corridors for prompt arrivals on urgent leaks and scheduled visits.',
+                  title: 'Fast Response Across Qatar',
+                  text: 'Stocked service vehicles stationed across Doha and North Qatar corridors for prompt arrivals on urgent repairs and scheduled visits.',
                 },
                 {
                   icon: Award,
                   title: 'Upfront & Competitive Pricing',
-                  text: 'Clear itemization of labor and spare parts before any work starts, protecting residential and commercial budgets.',
+                  text: 'Clear itemization of labor and spare parts before any work begins, protecting residential and commercial budgets.',
                 },
               ].map((item) => {
                 const Icon = item.icon;
@@ -383,13 +461,13 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* 5. Residential & Commercial Plumbing Solutions */}
+      {/* 5. Residential & Commercial Solutions */}
       <section className="py-16 lg:py-24 bg-white border-b border-slate-200">
         <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold text-amber-700">Property Sectors</p>
             <h2 className="mt-2 font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#041E42] text-balance">
-              Tailored Residential &amp; Commercial Plumbing Across Qatar
+              Tailored Residential &amp; Commercial Maintenance Across Qatar
             </h2>
           </div>
 
@@ -399,10 +477,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <div className="aspect-[16/10] bg-slate-200 overflow-hidden">
                 <ResilientImage
                   src={IMAGES.bathroom}
-                  alt="Residential bathroom plumbing and sanitary installation in Doha villa"
+                  alt="Residential plumbing, electrical, and home maintenance in Doha villa"
                   className="w-full h-full object-cover"
                   containerClassName="w-full h-full"
-                  fallbackLabel="Residential Plumbing Qatar"
+                  fallbackLabel="Residential Maintenance Qatar"
                 />
               </div>
               <div className="p-7 flex-1 flex flex-col justify-between">
@@ -411,16 +489,16 @@ export function HomePage({ onNavigate }: HomePageProps) {
                     Villas · Apartments · Compounds
                   </p>
                   <h3 className="mt-2 font-display text-2xl font-bold text-[#041E42]">
-                    Residential Plumbing Qatar
+                    Residential Plumbing &amp; Home Maintenance
                   </h3>
                   <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
-                    Clean, respectful in-home service for bathroom renovations, kitchen sinks, RO filters, leaking mixers, water heaters, shattaf upgrades, and rooftop water tank cleaning.
+                    Clean, respectful in-home service for leak detection, electrical sockets and lighting, split AC servicing, painting, carpentry, TV mounting, satellite alignment, and handyman tasks.
                   </p>
                   <ul className="mt-5 space-y-2 text-sm text-slate-700">
                     {[
-                      'Non-invasive acoustic leak detection under marble & tiles',
-                      'Concealed toilet cisterns, rain showers, and basin fit-outs',
-                      'Water heater servicing and semi-annual tank sanitization',
+                      'Plumbing leaks, water heaters, bathrooms, and rooftop water tanks',
+                      'Electrical troubleshooting, LED lighting, TV & satellite setup',
+                      'AC cleaning, interior painting, carpentry, and steel gate welding',
                     ].map((point) => (
                       <li key={point} className="flex items-start gap-2.5">
                         <Check className="w-4 h-4 text-[#041E42] mt-0.5 shrink-0" aria-hidden="true" />
@@ -432,11 +510,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
                 <div className="mt-7 pt-5 border-t border-slate-200">
                   <a
-                    href={routeToHash({ page: 'residential' })}
+                    href={routeToPath({ page: 'residential' })}
                     onClick={(e) => handleNav(e, { page: 'residential' })}
                     className="inline-flex items-center gap-2 text-sm font-semibold text-[#041E42] hover:text-amber-700"
                   >
-                    <span>Explore Residential Plumbing</span>
+                    <span>Explore Residential Solutions</span>
                     <ArrowRight className="w-4 h-4" aria-hidden="true" />
                   </a>
                 </div>
@@ -448,10 +526,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <div className="aspect-[16/10] bg-slate-200 overflow-hidden">
                 <ResilientImage
                   src={IMAGES.commercial}
-                  alt="Commercial plumbing booster pump room and insulated potable water piping in Qatar"
+                  alt="Commercial plumbing, electrical, and facility maintenance in Qatar"
                   className="w-full h-full object-cover"
                   containerClassName="w-full h-full"
-                  fallbackLabel="Commercial Plumbing Qatar"
+                  fallbackLabel="Commercial Facility Maintenance Qatar"
                 />
               </div>
               <div className="p-7 flex-1 flex flex-col justify-between">
@@ -460,16 +538,16 @@ export function HomePage({ onNavigate }: HomePageProps) {
                     Offices · Hospitality · Clinics · Industrial
                   </p>
                   <h3 className="mt-2 font-display text-2xl font-bold text-[#041E42]">
-                    Commercial Plumbing Qatar
+                    Commercial Plumbing &amp; Facility Care
                   </h3>
                   <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
-                    Scheduled maintenance and urgent repair support for commercial towers, restaurants, medical clinics, retail outlets, and warehouses requiring uninterrupted water and drainage.
+                    Scheduled preventive maintenance and rapid emergency repair support for commercial towers, restaurants, clinics, retail outlets, and warehouses requiring zero operational downtime.
                   </p>
                   <ul className="mt-5 space-y-2 text-sm text-slate-700">
                     {[
-                      'Multi-stage booster pump stations and main riser repairs',
-                      'Commercial kitchen grease-trap and hydro-jet drain clearing',
-                      'Flexible Annual Maintenance Contracts (AMC) & off-hours work',
+                      'Booster pump stations, drainage hydro-jetting, and main riser repairs',
+                      'Electrical DB balancing, office lighting, and commercial AC maintenance',
+                      'Flexible Annual Maintenance Contracts (AMC) & off-hours dispatch',
                     ].map((point) => (
                       <li key={point} className="flex items-start gap-2.5">
                         <Check className="w-4 h-4 text-[#041E42] mt-0.5 shrink-0" aria-hidden="true" />
@@ -481,11 +559,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
                 <div className="mt-7 pt-5 border-t border-slate-200">
                   <a
-                    href={routeToHash({ page: 'commercial' })}
+                    href={routeToPath({ page: 'commercial' })}
                     onClick={(e) => handleNav(e, { page: 'commercial' })}
                     className="inline-flex items-center gap-2 text-sm font-semibold text-[#041E42] hover:text-amber-700"
                   >
-                    <span>Explore Commercial Plumbing</span>
+                    <span>Explore Commercial Solutions</span>
                     <ArrowRight className="w-4 h-4" aria-hidden="true" />
                   </a>
                 </div>
@@ -501,7 +579,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           <div className="max-w-2xl">
             <p className="text-sm font-semibold text-amber-700">How We Work</p>
             <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#041E42] text-balance">
-              Simple Four-Step Plumbing Service Process
+              Simple Four-Step Service &amp; Maintenance Process
             </h2>
           </div>
 
@@ -572,7 +650,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="lg:col-span-4">
               <p className="text-sm font-semibold text-amber-700">Common Questions</p>
               <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#041E42] text-balance">
-                Frequently Asked Questions About Plumbing Services in Qatar
+                Frequently Asked Questions About Our Services in Qatar
               </h2>
               <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
                 Quick answers about emergency arrival windows, leak detection, pricing transparency, and our workmanship warranty across Doha and Qatar.
@@ -614,7 +692,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
       </section>
 
       {/* 9. Final Call-to-Action */}
-      <CallToActionBand onNavigate={onNavigate} />
+      <CallToActionBand
+        title="Need Plumbing, Electric, AC or Home Maintenance in Qatar?"
+        description="Contact Fix Hub Qatar now for 24/7 emergency dispatch, electrical & AC repairs, leak detection, carpentry, painting, or a clear quotation for your property."
+        onNavigate={onNavigate}
+      />
     </div>
   );
 }

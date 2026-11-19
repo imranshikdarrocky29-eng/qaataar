@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { RoutePath, routeToHash } from '../types/navigation';
+import { RoutePath, routeToPath } from '../types/navigation';
 import { BLOG_POSTS } from '../data/plumbingData';
 import { ResilientImage } from '../components/ResilientImage';
 import { CallToActionBand } from '../components/CallToActionBand';
@@ -23,7 +23,7 @@ export function BlogPage({ slug, onNavigate }: BlogPageProps) {
         <article className="bg-white py-12 lg:py-20 border-b border-slate-200">
           <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
             <a
-              href={routeToHash({ page: 'blog' })}
+              href={routeToPath({ page: 'blog' })}
               onClick={(e) => handleNav(e, { page: 'blog' })}
               className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900"
             >
@@ -132,7 +132,7 @@ export function BlogPage({ slug, onNavigate }: BlogPageProps) {
 
                     <h2 className="mt-3 font-display text-xl sm:text-2xl font-bold text-[#041E42]">
                       <a
-                        href={routeToHash({ page: 'blog', slug: post.slug })}
+                        href={routeToPath({ page: 'blog', slug: post.slug })}
                         onClick={(e) =>
                           handleNav(e, { page: 'blog', slug: post.slug })
                         }
@@ -150,7 +150,7 @@ export function BlogPage({ slug, onNavigate }: BlogPageProps) {
 
                 <div className="px-6 sm:px-7 pb-6 pt-4 border-t border-slate-100">
                   <a
-                    href={routeToHash({ page: 'blog', slug: post.slug })}
+                    href={routeToPath({ page: 'blog', slug: post.slug })}
                     onClick={(e) =>
                       handleNav(e, { page: 'blog', slug: post.slug })
                     }

@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight, Check, Phone, MessageCircle } from 'lucide-react';
-import { RoutePath, routeToHash } from '../types/navigation';
+import { RoutePath, routeToPath } from '../types/navigation';
 import {
   COMPANY_INFO,
   PLUMBING_SERVICES,
@@ -31,7 +31,7 @@ export function ServiceDetailPage({ slug, onNavigate }: ServiceDetailPageProps) 
       <section className="bg-[#041E42] text-white border-b border-[#0E3366] py-12 lg:py-16">
         <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16">
           <a
-            href={routeToHash({ page: 'services' })}
+            href={routeToPath({ page: 'services' })}
             onClick={(e) => handleNav(e, { page: 'services' })}
             className="inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-[#F5B700] transition-colors"
           >
@@ -81,7 +81,7 @@ export function ServiceDetailPage({ slug, onNavigate }: ServiceDetailPageProps) 
                   <span>WhatsApp for Quote</span>
                 </a>
                 <a
-                  href={routeToHash({
+                  href={routeToPath({
                     page: 'contact',
                     preselectedService: service.title,
                   })}
@@ -197,7 +197,7 @@ export function ServiceDetailPage({ slug, onNavigate }: ServiceDetailPageProps) 
               >
                 <div>
                   <a
-                    href={routeToHash({ page: 'service-detail', slug: item.slug })}
+                    href={routeToPath({ page: 'service-detail', slug: item.slug })}
                     onClick={(e) =>
                       handleNav(e, { page: 'service-detail', slug: item.slug })
                     }
@@ -217,7 +217,7 @@ export function ServiceDetailPage({ slug, onNavigate }: ServiceDetailPageProps) 
                     </div>
                     <h3 className="mt-2 font-display text-lg font-semibold text-[#041E42]">
                       <a
-                        href={routeToHash({ page: 'service-detail', slug: item.slug })}
+                        href={routeToPath({ page: 'service-detail', slug: item.slug })}
                         onClick={(e) =>
                           handleNav(e, { page: 'service-detail', slug: item.slug })
                         }
@@ -233,7 +233,7 @@ export function ServiceDetailPage({ slug, onNavigate }: ServiceDetailPageProps) 
                 </div>
                 <div className="px-6 pb-6 pt-4 border-t border-slate-100">
                   <a
-                    href={routeToHash({ page: 'service-detail', slug: item.slug })}
+                    href={routeToPath({ page: 'service-detail', slug: item.slug })}
                     onClick={(e) =>
                       handleNav(e, { page: 'service-detail', slug: item.slug })
                     }

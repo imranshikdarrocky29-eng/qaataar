@@ -1,6 +1,6 @@
 import { Phone, MessageCircle, ArrowRight } from 'lucide-react';
 import { COMPANY_INFO, getWhatsAppUrl } from '../data/plumbingData';
-import { RoutePath, routeToHash } from '../types/navigation';
+import { RoutePath, routeToPath } from '../types/navigation';
 
 interface CallToActionBandProps {
   title?: string;
@@ -52,7 +52,7 @@ export function CallToActionBand({
             </a>
 
             <a
-              href={routeToHash({ page: 'contact', preselectedService: serviceContext })}
+              href={routeToPath({ page: 'contact', preselectedService: serviceContext })}
               onClick={(e) => {
                 e.preventDefault();
                 onNavigate({ page: 'contact', preselectedService: serviceContext });

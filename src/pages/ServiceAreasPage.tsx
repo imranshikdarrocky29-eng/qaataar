@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { MapPin, Clock, ArrowRight } from 'lucide-react';
-import { RoutePath, routeToHash } from '../types/navigation';
+import { RoutePath, routeToPath } from '../types/navigation';
 import { SERVICE_AREAS, getWhatsAppUrl } from '../data/plumbingData';
 import { CallToActionBand } from '../components/CallToActionBand';
 
@@ -17,7 +17,7 @@ export function ServiceAreasPage({ onNavigate }: ServiceAreasPageProps) {
     if (selectedZone === 'All') return true;
     if (selectedZone === 'Doha Core') {
       return (
-        area.zone.includes('Central Doha') ||
+        area.zone.includes('Central') ||
         area.zone.includes('Inner Doha') ||
         area.zone.includes('West Doha')
       );
@@ -27,6 +27,7 @@ export function ServiceAreasPage({ onNavigate }: ServiceAreasPageProps) {
         area.zone.includes('North Doha') ||
         area.zone.includes('Lusail') ||
         area.zone.includes('Northwest') ||
+        area.zone.includes('Umm Salal') ||
         area.zone.includes('North/South')
       );
     }
@@ -44,10 +45,10 @@ export function ServiceAreasPage({ onNavigate }: ServiceAreasPageProps) {
           <div className="max-w-3xl">
             <p className="text-sm font-medium text-[#F5B700]">Qatar Coverage</p>
             <h1 className="mt-2 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white text-balance">
-              Plumbing Service Areas Across Doha &amp; Qatar
+              Plumbing, Electric &amp; Home Maintenance Areas Across Doha &amp; Qatar
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-200 leading-relaxed">
-              Our stocked plumbing service vans operate daily across Doha neighborhoods, Lusail, The Pearl, Al Wakrah, Al Rayyan, and industrial zones—subject to live dispatch schedules and route availability.
+              Our mobile technicians operate daily across Doha neighborhoods, Lusail, The Pearl, Um Salal Muhammad, Al Khessa, Ferroj Al Sudan, Bin Omran, Al Wakrah, Al Rayyan, and industrial zones—subject to live dispatch schedules and route availability.
             </p>
           </div>
 
@@ -126,7 +127,7 @@ export function ServiceAreasPage({ onNavigate }: ServiceAreasPageProps) {
                   </a>
 
                   <a
-                    href={routeToHash({ page: 'contact' })}
+                    href={routeToPath({ page: 'contact' })}
                     onClick={(e) => {
                       e.preventDefault();
                       onNavigate({ page: 'contact' });
